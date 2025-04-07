@@ -1,5 +1,6 @@
 # app.py
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Any
 import pandas as pd
@@ -9,8 +10,18 @@ from nltk.stem import PorterStemmer
 
 app = FastAPI(title="Product Recommendation API")
 
-# Load your product data CSV.
-# Make sure the file path matches where the file is stored.
+origins = [
+    "http://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 product_df = pd.read_csv("data/product_data.csv", converters={
     "aggregated_aspect_scores": lambda x: ast.literal_eval(x) if pd.notnull(x) else {}
 })
