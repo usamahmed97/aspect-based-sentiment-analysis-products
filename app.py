@@ -11,7 +11,8 @@ from nltk.stem import PorterStemmer
 app = FastAPI(title="Product Recommendation API")
 
 origins = [
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "https://aspect-based-sentiment-analysis-web.vercel.app"
 ]
 
 app.add_middleware(
